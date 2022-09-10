@@ -1,0 +1,32 @@
+# https://docs.microsoft.com/en-us/aspnet/core/security/docker-compose-https?view=aspnetcore-6.0
+
+version: '3.8'
+
+services:
+
+  react-demo:
+    container_name: react-demo
+    restart: unless-stopped
+    build:
+      context: ./reactjs
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    networks:
+      - demo
+
+  nginx:
+    image: nginx:1.21.5-alpine
+    container_name: nginx
+    restart: always
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - react-demo
+    networks:
+      - demo
+
+networks:
+  demo:
