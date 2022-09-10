@@ -8,7 +8,7 @@ services:
     container_name: react-demo
     restart: unless-stopped
     build:
-      context: ./reactjs
+      context: ./fe
       dockerfile: Dockerfile
     ports:
       - 3000:3000
